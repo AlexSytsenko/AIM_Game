@@ -2,7 +2,7 @@ const startBtn = document.querySelector("#start");
 const screens = document.querySelectorAll(".screen");
 const timeList = document.querySelector("#time-list");
 const timeEl = document.querySelector("#time");
-const board = document.querySelector('#board');
+const board = document.querySelector("#board");
 
 let time = 0;
 let score = 0;
@@ -20,13 +20,13 @@ timeList.addEventListener("click", (event) => {
   }
 });
 
-board.addEventListener('click', event => {
-  if(event.target.classList.contains('circle')) {
-    score++
+board.addEventListener("click", (event) => {
+  if (event.target.classList.contains("circle")) {
+    score++;
     event.target.remove();
     createRandomCircle();
   }
-})
+});
 
 function startGame() {
   setInterval(decreaseTime, 1000);
@@ -51,29 +51,36 @@ function setTime(value) {
 }
 
 function finishGame() {
-  timeEl.parentNode.classList.add('hide');
+  timeEl.parentNode.classList.add("hide");
   board.innerHTML = `<h2>Your score: <span class="primary">${score}</span></h2>`;
 }
 
 function createRandomCircle() {
-  const circle = document.createElement('div');
+  const circle = document.createElement("div");
 
   const size = getRandomNumber(10, 60);
-  const {height, width} = board.getBoundingClientRect();
-
+  const { height, width } = board.getBoundingClientRect();
   const x = getRandomNumber(0, width - size);
   const y = getRandomNumber(0, height - size);
+  const color = getRondomColor();
 
-  circle.classList.add('circle');
+  circle.classList.add("circle");
   circle.style.width = `${size}px`;
   circle.style.height = `${size}px`;
   circle.style.top = `${y}px`;
   circle.style.left = `${x}px`;
+  circle.style.backgroundColor = color;
 
-
-  board.append(circle)
+  board.append(circle);
 }
 
 function getRandomNumber(min, max) {
-  return Math.round(Math.random() * (max - min) + min)
+  return Math.round(Math.random() * (max - min) + min);
+}
+
+function getRondomColor() {
+  const colors = ["red", "blue", "green", "fuchsia", "aqua", "yellow", "lime"];
+  const colorsLength = colors.length;
+  const randomIndex = Math.round(Math.random() * (colorsLength - 1));
+  return colors[randomIndex];
 }
